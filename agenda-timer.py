@@ -41,6 +41,12 @@ def update_agenda():
             currSession = i
             sessionTitle.set(data[i]['title'])
             currentSpeaker.set(data[i]['speaker'])
+            try:
+                next_d = data[i]
+            except IndexError:
+                next_d = None
+            if next_d is not None:
+                nextTitle.set(next_d['speaker'] + ': ' + next_d['title'])
             break
 
     endtime = datetime.datetime.strptime(data[currSession]['endtime'], '%Y%m%d%H%M%S')
@@ -57,6 +63,7 @@ def update_agenda():
         lblCountdownTime.configure(foreground=color_green)
     # Set the text on the Tk Label for Countdown
     remainingTime.set(str(remainder))
+    pbar.step()
     # Trigger the countdown after 1000ms
     root.after(1000, update_agenda)
 
@@ -86,8 +93,10 @@ fntSmall = font.Font(family='Helvetica', size=20, weight='bold')
 # Create some Tkinter variables
 remainingTime = StringVar()
 sessionTitle = StringVar()
+nextTitle= StringVar()
 realTime = StringVar()
 currentSpeaker = StringVar()
+nextSpeaker = StringVar()
 numOfSessions = IntVar()
 currSession = IntVar()
 i = IntVar()
@@ -110,6 +119,17 @@ lblSpeaker.place(relx=0.5, rely=0.3, anchor=CENTER)
 
 lblCountdownTime = ttk.Label(root, textvariable=remainingTime, font=fntForCountdown, foreground=color_green, background=color_bg)
 lblCountdownTime.place(relx=0.5, rely=0.6, anchor=CENTER)
+
+pbar = ttk.Progressbar(root, orient='horizontal', length=700)
+pbar.place(relx=0.5, rely=0.8, anchor=CENTER)
+
+
+lblNextUp =  ttk.Label(root, text='Next up:', font=fntSmall, foreground=color_mute, background=color_bg)
+lblNextUp.place(relx=0.5, rely=0.9, anchor=CENTER)
+
+lblNextTitle =  ttk.Label(root, textvariable=nextTitle, font=fntForTitle, foreground=color_highlights, background=color_bg)
+lblNextTitle.place(relx=0.5, rely=0.95, anchor=CENTER)
+
 
 # Run the update_agenda
 root.after(1000, update_agenda)
