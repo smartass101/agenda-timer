@@ -50,7 +50,16 @@ contribs = load_contribs()
 cidx = 0
 
 
+state_running = True
+
+def toggle_running_state(*args):
+    global state_running
+    state_running = not state_running
+
 def update_agenda():
+    if not state_running:
+        root.after(1000, update_agenda)
+        return                  # do nothing
     # Get the time remaining until the event
     now = datetime.datetime.now()
     realTime.set(now.strftime('%H:%M'))
@@ -111,6 +120,7 @@ root.bind("<Escape>", quit)
 root.bind("x", quit)
 root.bind('n', lambda *args: goto_offset(+1))
 root.bind('p', lambda *args: goto_offset(-1))
+root.bind("p", toggle_running_state)
 style = ttk.Style()
 style.theme_use('classic') # to fix bug on Mac OSX
 style.configure("Red.TLabel", fg='red')
