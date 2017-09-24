@@ -4,7 +4,6 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import font
 import datetime
-import dateutil.parser
 import json
 import os
 import csv
@@ -28,9 +27,11 @@ second = datetime.timedelta(seconds=1)
 def quit(*args):
     root.destroy()
 
+dt0 = datetime.timedelta(0)
+
 
 def format_timedelta(td):
-    if td < timedelta(0):
+    if td < dt0:
         return '-' + format_timedelta(-td)
     else:
         # Change this to format positive timedeltas the way you want
@@ -38,10 +39,9 @@ def format_timedelta(td):
 
 
 def load_contribs():
-    cr = csv.reader(open('contribs_export.csv', newline=''))
+    cr = csv.reader(open('contribs_export_qt.csv', newline=''))
     contribs_d = [c[:2] +
-                  [dateutil.parser.parse(c[3]) -
-                   dateutil.parser.parse(c[2]),
+                  [datetime.timedelta(minutes=int(c[2])),
                    datetime.timedelta(0)] for c in list(cr)]
     return contribs_d
 
