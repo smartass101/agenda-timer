@@ -118,8 +118,9 @@ style.configure("Red.TLabel", fg='red')
 
 # Set the end date and time for the countdown
 fntNormal = font.Font(family='Helvetica', size=60, weight='bold')
-fntForCountdown = font.Font(family='Helvetica', size=80, weight='bold')
-fntForTitle = font.Font(family='Helvetica', size=40, weight='bold')
+fntForCountdown = font.Font(family='Helvetica', size=300, weight='bold')
+fntForTitle = font.Font(family='Helvetica', size=20, weight='bold')
+fntForName = font.Font(family='Helvetica', size=40, weight='bold')
 fntSmall = font.Font(family='Helvetica', size=20, weight='bold')
 
 # Create some Tkinter variables
@@ -135,32 +136,34 @@ i = IntVar()
 percent_done = IntVar()
 txtTimeRemaining = StringVar()
 
+wraplen = 1500
+
 
 # Add Tkinter Labels to hold the text elements
 lblRealTime = ttk.Label(root, textvariable=realTime, font=fntNormal, foreground=color_mute, background=color_bg)
 lblRealTime.place(relx=0.9, rely=0.1, anchor=CENTER)
 
-lblTimeRemaining = ttk.Label(root, textvariable=txtTimeRemaining, font=fntSmall, foreground=color_mute, background=color_bg)
-lblTimeRemaining.place(relx=0.5, rely=0.45, anchor=CENTER)
-txtTimeRemaining.set('Time Remaining: ')
+lblTitle =  ttk.Label(root, textvariable=sessionTitle, wraplength=wraplen, font=fntForTitle, foreground=color_highlights, background=color_bg)
+lblTitle.place(relx=0.5, rely=0.1, anchor=CENTER)
 
-lblTitle =  ttk.Label(root, textvariable=sessionTitle, font=fntForTitle, foreground=color_highlights, background=color_bg)
-lblTitle.place(relx=0.5, rely=0.2, anchor=CENTER)
+lblSpeaker =  ttk.Label(root, textvariable=currentSpeaker, font=fntForName, foreground=color_highlights, background=color_bg)
+lblSpeaker.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-lblSpeaker =  ttk.Label(root, textvariable=currentSpeaker, font=fntForTitle, foreground=color_highlights, background=color_bg)
-lblSpeaker.place(relx=0.5, rely=0.3, anchor=CENTER)
+# lblTimeRemaining = ttk.Label(root, textvariable=txtTimeRemaining, font=fntSmall, foreground=color_mute, background=color_bg)
+# lblTimeRemaining.place(relx=0.5, rely=0.3, anchor=CENTER)
+# txtTimeRemaining.set('Time Remaining: ')
 
 lblCountdownTime = ttk.Label(root, textvariable=remainingTime, font=fntForCountdown, foreground=color_green, background=color_bg)
-lblCountdownTime.place(relx=0.5, rely=0.6, anchor=CENTER)
+lblCountdownTime.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 pbar = ttk.Progressbar(root, variable=percent_done, orient='horizontal', length=700)
-pbar.place(relx=0.5, rely=0.8, anchor=CENTER)
+pbar.place(relx=0.5, rely=0.85, anchor=CENTER)
 
 
 lblNextUp =  ttk.Label(root, text='Next up:', font=fntSmall, foreground=color_mute, background=color_bg)
 lblNextUp.place(relx=0.5, rely=0.9, anchor=CENTER)
 
-lblNextTitle =  ttk.Label(root, textvariable=nextTitle, font=fntForTitle, foreground=color_highlights, background=color_bg)
+lblNextTitle =  ttk.Label(root, textvariable=nextTitle, wraplength=wraplen, font=fntForTitle, foreground=color_highlights, background=color_bg)
 lblNextTitle.place(relx=0.5, rely=0.95, anchor=CENTER)
 
 
