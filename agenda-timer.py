@@ -83,6 +83,10 @@ def update_agenda():
     root.after(1000, update_agenda)
 
 
+def reset_elapsed(*args):
+    contribs[cidx][3] = datetime.timedelta(0)
+
+
 def goto_offset(di):
     global cidx
     try:
@@ -121,6 +125,7 @@ root.bind("x", quit)
 root.bind('n', lambda *args: goto_offset(+1))
 root.bind('p', lambda *args: goto_offset(-1))
 root.bind("p", toggle_running_state)
+root.bind('r', reset_elapsed)
 style = ttk.Style()
 style.theme_use('classic') # to fix bug on Mac OSX
 style.configure("Red.TLabel", fg='red')
